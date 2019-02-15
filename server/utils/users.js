@@ -6,8 +6,12 @@ class Users{
   }
   addUser (id,name,room) {
     var user = {id,name,room};
-    this.users.push(user);
-    return user;
+    var duplicateUsers = this.users.filter((user) => user.name === name);
+    if (duplicateUsers.length == 0) {
+      this.users.push(user);
+      return user;
+    }
+
   }
   removeUser (id) {
     var user = this.getUser(id);
@@ -23,6 +27,10 @@ class Users{
     var users = this.users.filter((user) => user.room === room);
     var namesArray = users.map((user) => user.name);
     return namesArray;
+  }
+  getActiveRooms (){
+    let activeRooms = [...new Set(this.users.map(item => item.room))];
+    return activeRooms;
   }
 }
 
